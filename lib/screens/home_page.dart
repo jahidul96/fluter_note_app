@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    mainAxisExtent: 120,
+                    mainAxisExtent: 100,
                   ),
                   children: snapshot.data!.docs
                       .map((doc) => singleNotes(() {

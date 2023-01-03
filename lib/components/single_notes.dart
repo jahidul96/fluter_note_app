@@ -8,7 +8,6 @@ Widget singleNotes(Function()? onTap, QueryDocumentSnapshot doc) {
   return InkWell(
     onTap: onTap,
     child: Container(
-      height: 100,
       decoration: BoxDecoration(
         color: Colors.amberAccent,
         borderRadius: BorderRadius.circular(10),
@@ -32,6 +31,7 @@ Widget singleNotes(Function()? onTap, QueryDocumentSnapshot doc) {
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

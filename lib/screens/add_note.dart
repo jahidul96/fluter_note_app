@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 class AddNote extends StatefulWidget {
   const AddNote({super.key});
@@ -26,6 +27,11 @@ class _AddNoteState extends State<AddNote> {
 
     db.collection("notes").add(note).then((value) => {
           print(value.id),
+          Get.snackbar(
+            "Note App",
+            "Your note added!!",
+            backgroundColor: Colors.white,
+          ),
           Navigator.pop(context),
           titleController.clear(),
           decriptionController.clear(),
