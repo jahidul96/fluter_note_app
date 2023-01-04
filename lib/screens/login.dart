@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:notesapp/screens/home_page.dart';
 import 'package:notesapp/screens/register.dart';
 
 class Login extends StatefulWidget {
@@ -23,10 +24,10 @@ class _LoginState extends State<Login> {
         email: emailController.text,
         password: passwordController.text,
       );
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const HomePage()),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
       print("login sucesfull!");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

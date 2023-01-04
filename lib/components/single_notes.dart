@@ -5,10 +5,12 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SingleNotes extends StatelessWidget {
   Function()? onTap;
   QueryDocumentSnapshot doc;
+
   SingleNotes(this.onTap, this.doc, {super.key});
 
   List<Color> itemBg = [
@@ -24,6 +26,7 @@ class SingleNotes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime noteTime = doc['createdAt'].toDate();
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -44,7 +47,16 @@ class SingleNotes extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 6),
+              Text(
+                DateFormat.yMMMd().add_jm().format(noteTime),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
               Text(
                 doc["description"],
                 style: TextStyle(

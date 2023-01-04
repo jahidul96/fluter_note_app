@@ -24,6 +24,7 @@ class _AddNoteState extends State<AddNote> {
     Map<String, dynamic> note = {
       "title": titleController.text,
       "description": decriptionController.text,
+      "createdAt": DateTime.now(),
     };
 
     db

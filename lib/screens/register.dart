@@ -44,7 +44,7 @@ class _RegisterState extends State<Register> {
         },
       );
 
-      print("sign succesfull");
+      print("login succesfull");
 
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => HomePage()));
