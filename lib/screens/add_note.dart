@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -25,17 +26,22 @@ class _AddNoteState extends State<AddNote> {
       "description": decriptionController.text,
     };
 
-    db.collection("notes").add(note).then((value) => {
-          print(value.id),
-          Get.snackbar(
-            "Note App",
-            "Your note added!!",
-            backgroundColor: Colors.white,
-          ),
-          Navigator.pop(context),
-          titleController.clear(),
-          decriptionController.clear(),
-        });
+    db
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("mynotes")
+        .add(note)
+        .then((value) => {
+              print(value.id),
+              Get.snackbar(
+                "Note App",
+                "Your note added!!",
+                backgroundColor: Colors.white,
+              ),
+              Navigator.pop(context),
+              titleController.clear(),
+              decriptionController.clear(),
+            });
   }
 
   @override

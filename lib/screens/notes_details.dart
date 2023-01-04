@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 class NoteDetails extends StatefulWidget {
   QueryDocumentSnapshot doc;
@@ -19,6 +21,27 @@ class _NoteDetailsState extends State<NoteDetails> {
         title: Text("Details"),
         backgroundColor: Colors.black,
         elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: () {
+              FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .collection("mynotes")
+                  .doc(widget.doc.id)
+                  .delete()
+                  .then((value) {
+                Get.snackbar(
+                  "Note App",
+                  "Your Note Deleted!!",
+                  backgroundColor: Colors.white,
+                );
+                Navigator.pop(context);
+              });
+            },
+            icon: Icon(Icons.delete),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),

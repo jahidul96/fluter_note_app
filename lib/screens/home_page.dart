@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -29,51 +31,59 @@ class _HomePageState extends State<HomePage> {
       // main content
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Expanded(
-          child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection("notes").snapshots(),
-            builder: (context, snapshot) {
-              // loadding state content
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("users")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection("mynotes")
+              .snapshots(),
+          builder: (context, snapshot) {
+            // loadding state content
 
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-              // data has content
-              if (snapshot.hasData) {
-                return GridView(
+            // data content
+            if (snapshot.hasData) {
+              // print('doc id');
+              // print(snapshot.data!.docs[1].id);
+              return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                     mainAxisExtent: 100,
                   ),
-                  children: snapshot.data!.docs
-                      .map((doc) => singleNotes(() {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NoteDetails(doc),
-                                ));
-                          }, doc))
-                      .toList(),
-                );
-              }
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: ((context, index) {
+                    return SingleNotes(
+                      () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  NoteDetails(snapshot.data!.docs[index]),
+                            ));
+                      },
+                      snapshot.data!.docs[index],
+                    );
+                  }));
+            }
 
-              //  empty content
-              return Center(
-                child: Text(
-                  "No notes Till now",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
+            //  empty content
+            return Center(
+              child: Text(
+                "No notes Till now",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
 
@@ -91,3 +101,22 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+// GridView(
+//                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//                     crossAxisCount: 2,
+//                     crossAxisSpacing: 10,
+//                     mainAxisSpacing: 10,
+//                     mainAxisExtent: 100,
+//                   ),
+//                   children: snapshot.data!.docs
+//                       .map((doc) => SingleNotes(() {
+//                             Navigator.push(
+//                                 context,
+//                                 MaterialPageRoute(
+//                                   builder: (context) => NoteDetails(doc),
+//                                 ));
+//                           }, doc))
+//                       .toList(),
+//                 );
