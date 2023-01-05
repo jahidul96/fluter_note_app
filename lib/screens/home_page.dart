@@ -101,22 +101,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-
-// GridView(
-//                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//                     crossAxisCount: 2,
-//                     crossAxisSpacing: 10,
-//                     mainAxisSpacing: 10,
-//                     mainAxisExtent: 100,
-//                   ),
-//                   children: snapshot.data!.docs
-//                       .map((doc) => SingleNotes(() {
-//                             Navigator.push(
-//                                 context,
-//                                 MaterialPageRoute(
-//                                   builder: (context) => NoteDetails(doc),
-//                                 ));
-//                           }, doc))
-//                       .toList(),
-//                 );

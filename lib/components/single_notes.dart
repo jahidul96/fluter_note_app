@@ -20,9 +20,14 @@ class SingleNotes extends StatelessWidget {
     Colors.green.shade300,
     Colors.blue.shade300,
     Colors.yellow.shade50,
+    Colors.orange,
+    Colors.orange.shade300,
+    Colors.red.shade300,
+    Colors.pink.shade300,
+    Colors.blue.shade500,
   ];
 
-  final random_number = Random().nextInt(5);
+  final random_number = Random().nextInt(10);
 
   @override
   Widget build(BuildContext context) {
