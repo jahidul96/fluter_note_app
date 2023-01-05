@@ -15,6 +15,87 @@ class NoteDetails extends StatefulWidget {
 }
 
 class _NoteDetailsState extends State<NoteDetails> {
+  final db = FirebaseFirestore.instance;
+  final titleController = TextEditingController();
+  final decriptionController = TextEditingController();
+
+  // editNotes
+  editNotes() {
+    Map<String, dynamic> editedNote = {
+      "title": titleController.text,
+      "description": decriptionController.text,
+      "createdAt": DateTime.now(),
+    };
+
+    db
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("mynotes")
+        .doc(widget.doc.id)
+        .update(editedNote)
+        .then((value) {
+      print("Notes updated");
+      Get.snackbar(
+        "Note app",
+        "Your Noted updated",
+        backgroundColor: Colors.white,
+      );
+      Navigator.pop(context);
+      Navigator.pop(context);
+    });
+  }
+
+  // popupDialogBox
+
+  popupDialogBox() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Container(
+            width: 300,
+            height: 300,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    controller: titleController,
+                    decoration: InputDecoration(
+                      hintText: "Title",
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  TextField(
+                    controller: decriptionController,
+                    keyboardType: TextInputType.multiline,
+                    decoration: InputDecoration(
+                      hintText: "description",
+                    ),
+                  ),
+                  SizedBox(height: 35),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 45,
+                    child: MaterialButton(
+                      color: Colors.black,
+                      onPressed: editNotes,
+                      child: Text(
+                        "Edit Note",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
+                ]),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     DateTime noteTime = widget.doc['createdAt'].toDate();
@@ -80,7 +161,7 @@ class _NoteDetailsState extends State<NoteDetails> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
-        onPressed: () {},
+        onPressed: popupDialogBox,
         child: Icon(Icons.edit),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:notesapp/screens/chech_auth.dart';
 import 'package:notesapp/screens/home_page.dart';
 import 'package:notesapp/screens/register.dart';
+import 'package:notesapp/screens/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const CheckAuthUser(),
+      home: const SplashScreen(),
     );
   }
 }

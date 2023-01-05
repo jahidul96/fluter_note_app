@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:notesapp/screens/chech_auth.dart';
 import 'package:notesapp/screens/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,8 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
         const Duration(seconds: 5),
         () => {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomePage()))
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CheckAuthUser()))
             });
     super.initState();
   }
